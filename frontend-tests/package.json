@@ -1,0 +1,11 @@
+{
+  "name": "riva-booking-frontend-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test booking-ui.test.js"
+  },
+  "devDependencies": {
+    "jsdom": "30.1.3"
+  }
+}

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meeting room bookings</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <h1>Meeting room bookings</h1>
+      <p>View and book rooms for one UTC date at a time. All dates and times are in UTC.</p>
+      <p class="utc-clock">Current UTC time: <time id="current-utc-time"></time></p>
+    </header>
+
+    <div class="layout">
+      <section class="panel" aria-labelledby="rooms-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="rooms-heading">Rooms</h2>
+            <p>Active bookings for the selected UTC date.</p>
+          </div>
+          <div class="date-field">
+            <label for="selected-date">Date (UTC)</label>
+            <input id="selected-date" name="date" type="date" required>
+          </div>
+        </div>
+        <div id="rooms" class="room-grid" aria-live="polite">Loading rooms...</div>
+      </section>
+
+      <section class="panel booking-panel" aria-labelledby="booking-heading">
+        <h2 id="booking-heading">Book a room</h2>
+        <p>Bookings stay within the selected UTC date. The exclusive end can be 00:00 next day.</p>
+        <form id="booking-form">
+          <label for="booker-name">Your name</label>
+          <input id="booker-name" name="name" type="text" maxlength="100" autocomplete="name" required>
+
+          <label for="room-select">Room</label>
+          <select id="room-select" name="roomId" required></select>
+
+          <div class="time-fields">
+            <div>
+              <label for="start-time">Start (UTC)</label>
+              <select id="start-time" name="start" required></select>
+            </div>
+            <div>
+              <label for="end-time">End (UTC)</label>
+              <select id="end-time" name="end" required></select>
+            </div>
+          </div>
+          <p id="time-hint" class="time-hint" aria-live="polite"></p>
+
+          <button id="book-button" class="primary-button" type="submit" disabled>Book room</button>
+        </form>
+        <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

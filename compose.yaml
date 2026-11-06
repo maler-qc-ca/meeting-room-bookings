@@ -1,0 +1,38 @@
+services:
+  app:
+    build:
+      context: .
+      target: runtime
+    environment:
+      Bookings__DatabasePath: /data/bookings.db
+    ports:
+      - "8080:8080"
+    volumes:
+      - bookings-data:/data
+
+  api-tests:
+    profiles: [test]
+    image: mcr.microsoft.com/dotnet/sdk:10.0
+    working_dir: /src
+    environment:
+      NUGET_PACKAGES: /root/.nuget/packages
+    volumes:
+      - .:/src
+      - nuget-cache:/root/.nuget/packages
+    command: ["dotnet", "test", "BookingApp.Tests/BookingApp.Tests.csproj", "--configuration", "Release"]
+
+  ui-tests:
+    profiles: [test]
+    image: node:26-alpine
+    working_dir: /src/frontend-tests
+    volumes:
+      - .:/src
+      - npm-cache:/root/.npm
+      - frontend-node-modules:/src/frontend-tests/node_modules
+    command: ["sh", "-c", "npm ci && npm test"]
+
+volumes:
+  bookings-data:
+  nuget-cache:
+  npm-cache:
+  frontend-node-modules:
